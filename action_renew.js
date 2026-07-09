@@ -63,6 +63,12 @@ if (HTTP_PROXY) {
             password: proxyUrl.password ? decodeURIComponent(proxyUrl.password) : undefined
         };
         console.log(`[代理] 检测到配置: 服务器=${PROXY_CONFIG.server}, 认证=${PROXY_CONFIG.username ? '是' : '否'}`);
+        // ⬇️ 新增以下四行代码，彻底切断环境变量对 Chrome 的毒害 ⬇️
+        delete process.env.HTTP_PROXY;
+        delete process.env.http_proxy;
+        delete process.env.HTTPS_PROXY;
+        delete process.env.https_proxy;
+        // ⬆️ -------------------------------------------- ⬆️
     } catch (e) {
         console.error('[代理] HTTP_PROXY 格式无效。');
         process.exit(1);
